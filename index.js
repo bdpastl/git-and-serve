@@ -7,7 +7,7 @@ const server = http.createServer( (req, res) => {
   const route = req.url
 
 
-  res.end("The METHOD METHOD METHOD METHOD METHOD METHOD " + method + " and the route was " + route)
+  res.end("The method request was " + method + " and the route was " + route)
 })
 
 const port = 3535

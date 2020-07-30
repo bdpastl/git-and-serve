@@ -1,47 +1,21 @@
-const http = require("http")
 const express = require("express")
+const mongoose = require("mongoose")
+const userRoute = require('./userRoute')
+
+const mongoDefaultURL = "mongodb://127.0.0.1:27017/airport"
+
+mongoose.connect(mongoDefaultURL, {
+  useNewUrlParser: true, 
+  useUnifiedTopology: true
+})
+
+const dbConnection = mongoose.connection
+dbConnection.on("error", err => console.error(err))
+dbConnection.once("open", () => console.log('connected to db!!! 🍕'))
 
 const app = express()
 
-const homeResponse = (req,res) => {
-  res.json({
-    hi: "there",
-    whats: "up",
-  })
-}
-
-const bestTvShow = (req, res) => {
-  res.send("Parks and Rec")
-}
-
-const absurdTvShow = (req, res) => {
-  res.send("The Order")
-}
-
-const fourOhFour = (req, res) => {
-  res.status(404)
-  res.send("Four Oh Four :( ")
-}
-
-const routes = {
-  'GET /': homeResponse,
-  'GET /bestTv': bestTvShow,
-  'GET /absurdTv': absurdTvShow
-}
-
-
-
-app.use((req, res) => {
-  const routeKey = req.method+ ' ' + req.url
-  const desiredRouteFunction = routes[routeKey]
-  
-  if (desiredRouteFunction !== undefined) {
-    desiredRouteFunction(req, res)
-  } else {
-    fourOhFour(req, res)
-  }
-})
+app.use("/user", userRoute)
 
 const port = 3535
 app.listen(port, console.log(`Now listening on port ${port}: 🚢⛴🛳`))
-

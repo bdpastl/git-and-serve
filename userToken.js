@@ -1,9 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const {
-  checkUserCredentials
-} = require("./userInformation")
-jsonWebToken = require('jsonwebtoken')
+const jsonWebToken = require('jsonwebtoken')
 
 const tokenSignature = "gitAndServeBackend"
 
@@ -19,17 +16,12 @@ const createToken = (userName) => {
 
 const getUserToken = (req, res) => {
 
-  const { userName, password } = req.body
+  const { userName } = req.body
+  const token = createToken(userName)
 
-  if (checkUserCredentials(userName, password)) {
-    const token = createToken(userName)
-
-    res.json({
-      token
-    })
-  }
-
-
+  res.json({
+    token
+  })
 }
 
 

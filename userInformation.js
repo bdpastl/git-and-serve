@@ -25,6 +25,9 @@ const addUserToDatabase = async (req, res) => {
 const checkUserCredentials = async (userName, password) => {
   console.log("Username? ", userName, password)
 
+  console.log("password1! length", "password1!".length)
+  console.log("password1! length", password.length)
+
   const results = await userModel.findOne({
     userName
   })
@@ -37,6 +40,7 @@ const checkUserCredentials = async (userName, password) => {
 
   const comparisonBool = await bycrypt.compare(password, results.password)
 
+  console.log("comparison?", comparisonBool)
   return comparisonBool  
 }
 

@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const userRoute = require('./userRoute')
 const billRoute = require('./billRoute')
 const tokenAuth = require('./lib/tokenAuth')
+const basicAuth = require('./lib/basicAuth')
 const userTokenRoute = require('./userToken')
 
 const mongoDefaultURL = "mongodb://127.0.0.1:27017/airport"
@@ -19,7 +20,7 @@ dbConnection.once("open", () => console.log('connected to db!!! 🍕'))
 const app = express()
 
 app.use("/user", userRoute)
-app.use("/token", userTokenRoute)
+app.use("/token", basicAuth,  userTokenRoute)
 app.use("/bill", tokenAuth, billRoute)
 
 const port = 3535

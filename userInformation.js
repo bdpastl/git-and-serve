@@ -38,10 +38,25 @@ const checkUserCredentials = async (userName, password) => {
   const comparisonBool = await bycrypt.compare(password, results.password)
 
   return comparisonBool  
+}
+
+const checkUserExists = async userName => {
+  const results = await userModel.findOne({
+    userName
+  })
+
+  if (results === null || results === undefined) {
+    return false
+  }
+
+  console.log("Results", results)
+
+  return true
 
 }
 
 module.exports = { 
   addUserToDatabase,
-  checkUserCredentials
+  checkUserCredentials,
+  checkUserExists
 } 

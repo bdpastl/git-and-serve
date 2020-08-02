@@ -19,7 +19,16 @@ dbConnection.once("open", () => console.log('connected to db!!! 🍕'))
 
 const app = express()
 
-app.use("/user", userRoute)
+const goofyLoggingMiddleware = ( req, res, next) => {
+  console.log("I'm a logger! ")
+  console.log("Your request headers are: ", req.headers)
+  console.log("Your request method was: ", req.method)
+
+  next()
+}
+
+
+app.use("/user", goofyLoggingMiddleware , userRoute)
 app.use("/token", basicAuth,  userTokenRoute)
 app.use("/bill", tokenAuth, billRoute)
 

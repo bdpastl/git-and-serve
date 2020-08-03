@@ -5,6 +5,8 @@ const billRoute = require('./billRoute')
 const tokenAuth = require('./lib/tokenAuth')
 const basicAuth = require('./lib/basicAuth')
 const userTokenRoute = require('./userToken')
+const cors = require("cors")
+const morgan = require('morgan')
 
 const mongoDefaultURL = "mongodb://127.0.0.1:27017/airport"
 
@@ -19,16 +21,8 @@ dbConnection.once("open", () => console.log('connected to db!!! 🍕'))
 
 const app = express()
 
-const goofyLoggingMiddleware = ( req, res, next) => {
-  console.log("I'm a logger! ")
-  console.log("Your request headers are: ", req.headers)
-  console.log("Your request method was: ", req.method)
-
-  next()
-}
-
-
-app.use("/user", goofyLoggingMiddleware , userRoute)
+app.use(cors())
+app.use("/user", morgan(), userRoute)
 app.use("/token", basicAuth,  userTokenRoute)
 app.use("/bill", tokenAuth, billRoute)
 

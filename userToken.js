@@ -20,7 +20,8 @@ const getUserToken = (req, res) => {
   const token = createToken(userName)
 
   res.json({
-    token
+    token,
+    role: "whatever"
   })
 }
 
